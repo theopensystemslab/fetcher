@@ -1,0 +1,25 @@
+// const StreamZip = require("node-stream-zip");
+// const request = require("request");
+
+
+// const url = `http://localhost:3330/${org}/${repo}/archive/master.zip`;
+
+// const file = `${org}__${repo}.zip`;
+
+// request(url)
+//   .pipe(fs.createWriteStream(file))
+//   .on("close", function() {
+//     const zip = new StreamZip({
+//       file,
+//       storeEntries: true
+//     }).on("ready", () => {
+//       console.log("Entries read: " + zip.entriesCount);
+//       for (const entry of Object.values(zip.entries())) {
+//         // const desc = entry.isDirectory ? "directory" : `${entry.size} bytes`;
+//         // console.log(`Entry ${entry.name}: ${desc}`);
+//         console.log(entry);
+//       }
+//       // Do not forget to close the file once you're done
+//       zip.close();
+//     });
+//   });
