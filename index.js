@@ -3,6 +3,7 @@ const express = require("express");
 const rimraf = require("rimraf");
 const merge = require("./merge");
 const cors = require("cors");
+const { promisify } = require("util");
 
 const app = express();
 app.use(cors());
@@ -15,11 +16,20 @@ async function main({
 }) {
   const dir = `tmp/${org}__${repo}`;
 
-  rimraf.sync(dir);
+  await promisify(rimraf)(dir);
 
   const url = `http://localhost:3330/${org}/${repo}.git`;
 
-  await simplegit(".").clone(url, dir, ["--recurse-submodules", "-j8"]);
+  console.log({ url, dir });
+
+  // await simplegit(".").clone(url, dir, ["--recurse-submodules", "-j8"]);
+
+  await simplegit(".").clone(url, dir, [
+    // "--recursive",
+    "--shallow-submodules",
+    // "--depth 1",
+    "-j8"
+  ]);
 
   return await merge(dir, org, repo);
 }
